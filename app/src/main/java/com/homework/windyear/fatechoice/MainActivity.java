@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -46,14 +47,15 @@ public class MainActivity extends AppCompatActivity {
         // 动态地添加Button和点击事件
         // 采用 sharedpreferences 进行存储，分别存储主题名字，然后根据主题的名字存储
         SharedPreferences theme = getSharedPreferences("theme", MODE_PRIVATE);
-        SharedPreferences.Editor editor = theme.edit();
+        // SharedPreferences.Editor editor = theme.edit();
         // 首先获取主题的名字
         String theme_name = theme.getString("theme", null);
         if(theme_name == null){
             return;
         }
         else{
-            String[] all_theme_name = theme_name.split("|");
+            // 使用/要加上双反斜杠，|是转义字符。
+            String[] all_theme_name = theme_name.split("\\|");
             LinearLayout linearLayout = findViewById(R.id.themes);
             for(int i = 0; i < all_theme_name.length; i++){
                 Button btn = new Button(MainActivity.this);
@@ -62,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
                 btn.setGravity(Gravity.CENTER_HORIZONTAL);
                 // 设置事件监听
                 btn.setOnClickListener(click_to_choose);
+                // 设置居中布局
+                btn.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 linearLayout.addView(btn);
             }
         }
@@ -101,4 +105,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     };
+
+    // 重新载入activtiy自动调用的方法
+//    @Override
+//    protected void onResume(){
+//        super.onResume();
+//        onCreate(null);
+//    }
 }
