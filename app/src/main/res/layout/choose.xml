@@ -9,10 +9,13 @@
         android:id="@+id/fate_choice_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="主题名字" />
+        android:text="主题名字"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp" />
 
     <Button
         android:id="@+id/btn_start_choose"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="开启命运的抉择" />

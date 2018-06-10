@@ -3,6 +3,7 @@ package com.homework.windyear.fatechoice;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,9 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-
+    private long pressTimes = 0;
+    private long preBackPressTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
                 Intent intent = new Intent(MainActivity.this, add_choice_theme.class);
                 startActivity(intent);
+                // 结束当前的activity,等到后面返回时再重新加载
+                // 因为下一个activity会改变布局
+                finish();
             }
         });
         // Button button = (Button)findViewById(R.id.button);
@@ -57,8 +63,9 @@ public class MainActivity extends AppCompatActivity {
             // 使用/要加上双反斜杠，|是转义字符。
             String[] all_theme_name = theme_name.split("\\|");
             LinearLayout linearLayout = findViewById(R.id.themes);
-            for(int i = 0; i < all_theme_name.length; i++){
+            for(int i = 1; i < all_theme_name.length; i++){
                 Button btn = new Button(MainActivity.this);
+                // btn.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 btn.setText(all_theme_name[i]);
                 // 设置按钮居中
                 btn.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -112,4 +119,21 @@ public class MainActivity extends AppCompatActivity {
 //        super.onResume();
 //        onCreate(null);
 //    }
+    @Override
+    public void onBackPressed() {
+        // super.onBackPressed();
+        long cBackPressTime = SystemClock.uptimeMillis();
+        if (cBackPressTime - preBackPressTime < 2000) {
+            pressTimes++;
+            if (pressTimes >= 2) {
+                finish();
+            }
+        } else {
+            pressTimes = 1;
+        }
+        if (pressTimes == 1) {
+            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+        }
+        preBackPressTime = cBackPressTime;
+    }
 }

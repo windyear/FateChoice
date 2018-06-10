@@ -11,10 +11,12 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 
 public class fate_choice extends AppCompatActivity {
+    private boolean click = false;
     Handler handler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +97,19 @@ public class fate_choice extends AppCompatActivity {
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
+            if(click){
+                Toast.makeText(getApplicationContext(), "已经做出神圣选择，不能再次选择", Toast.LENGTH_SHORT).show();
+                LinearLayout linearLayout = findViewById(R.id.choice_linear_layout);
+                // 子控件的数量
+                int number_of_choice = linearLayout.getChildCount();
+                View view1 = linearLayout.getChildAt(number_of_choice-1);
+                if (view1 instanceof ProgressBar){
+                    ProgressBar progressBar = (ProgressBar)view1;
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+                return;
+            }
+            click = true;
             LinearLayout linearLayout = findViewById(R.id.choice_linear_layout);
             // 子控件的数量
             int number_of_choice = linearLayout.getChildCount();

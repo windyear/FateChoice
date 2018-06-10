@@ -1,5 +1,6 @@
 package com.homework.windyear.fatechoice;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -66,6 +67,8 @@ public class add_choice_theme extends AppCompatActivity {
                     editor.putString(theme_name, choice);
                     //之前忘记提交了
                     editor.commit();
+                    Intent intent = new Intent(add_choice_theme.this, MainActivity.class);
+                    startActivity(intent);
                     //提交后返回主界面
                     finish();
 
@@ -74,5 +77,14 @@ public class add_choice_theme extends AppCompatActivity {
                 // Toast.makeText(getApplicationContext(), save_choice, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public  void onBackPressed(){
+        Intent intent = new Intent(add_choice_theme.this, MainActivity.class);
+        startActivity(intent);
+        // 结束当前的activity,等到后面返回时再重新加载
+        // 因为下一个activity会改变布局
+        finish();
     }
 }
