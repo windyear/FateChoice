@@ -1,9 +1,3 @@
----
-title: FateChoice
-tags: android,小项目,
-grammar_cjkRuby: true
----
-
 
 ## FateChoice项目说明
 - FateChoice针对有选择困难症的人，提供添加选择主题，随机做一个抉择的功能。
@@ -23,4 +17,5 @@ grammar_cjkRuby: true
 
 ## 项目地址
 [Android小项目-FateChoice 选择困难神器](https://github.com/windyear/FateChoice)
-r**欢迎提issue和pr**
+
+**欢迎提issue和pr**
